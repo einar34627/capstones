@@ -1,40 +1,57 @@
 <?php
 session_start();
 
-// Include database connection
+// Include database connection and auth class
 require_once __DIR__ . '/includes/Database.php';
+require_once __DIR__ . '/includes/Auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
+    $userType = trim($_POST['user_type'] ?? '');
+    $street = trim($_POST['street'] ?? '');
     
     // Validation
-    if (empty($email) || empty($password)) {
-        $_SESSION['error'] = 'Please enter both email and password';
+    if (empty($email) || empty($password) || empty($userType)) {
+        $_SESSION['error'] = 'Please enter email, password, and select user type';
+        header('Location: login');
+        exit();
+    }
+    
+    // Validate user type
+    $validUserTypes = ['super_admin', 'sec_admin', 'admin'];
+    if (!in_array($userType, $validUserTypes)) {
+        $_SESSION['error'] = 'Invalid user type selected';
+        header('Location: login');
+        exit();
+    }
+    
+    // Street validation for admin users
+    if ($userType === 'admin' && empty($street)) {
+        $_SESSION['error'] = 'Please select a street for Administrator login';
         header('Location: login');
         exit();
     }
     
     try {
-        $db = Database::getInstance();
+        $auth = new Auth();
         
-        // Get user from database
-        $user = $db->fetch("SELECT id, name, email, password, usertype FROM users WHERE email = ?", [$email]);
-        
-        if ($user && password_verify($password, $user['password'])) {
-            // Check if user is admin
-            if ($user['usertype'] === 'admin') {
-                // Login successful for admin
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['name'] = $user['name'];
-                $_SESSION['usertype'] = $user['usertype'];
+        // Attempt login
+        if ($auth->attempt(['email' => $email, 'password' => $password])) {
+            // Verify that the user's actual type matches the selected type
+            $user = $auth->user();
+            if ($user && $user['usertype'] === $userType) {
+                // Store street information for admin users
+                if ($userType === 'admin' && !empty($street)) {
+                    $_SESSION['user_street'] = $street;
+                }
                 
-                header('Location: admin');
-                exit();
+                // Login successful - redirect based on user type
+                $auth->redirectBasedOnRole();
             } else {
-                // Regular users are not allowed
-                $_SESSION['error'] = 'Access denied. Only administrators can login.';
+                // User type mismatch
+                $auth->logout();
+                $_SESSION['error'] = 'Selected user type does not match your account type';
                 header('Location: login');
                 exit();
             }

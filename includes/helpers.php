@@ -2,8 +2,14 @@
 
 // Helper functions
 
-function redirect($url) {
-    header("Location: {$url}");
+function redirect($path) {
+    // Build an absolute URL for app routes; allow absolute URLs or absolute paths as-is
+    if (preg_match('#^https?://#i', $path) || strpos($path, '/') === 0) {
+        $dest = $path;
+    } else {
+        $dest = url($path);
+    }
+    header("Location: {$dest}");
     exit();
 }
 

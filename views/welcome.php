@@ -372,12 +372,13 @@
 
   #tipFormContainer {
     background: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     width: 90%;
-    max-width: 600px;
+    max-width: 500px;
     z-index: 1000;
+    margin: auto;
   }
 
   #tipForm input,
@@ -388,6 +389,12 @@
     font-size: 16px;
     border-radius: 8px;
     border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  #tipForm input[type="file"] {
+    padding: 6px;
+    background: #f9f9f9;
+    display: block;
   }
 
   #tipForm button[type="submit"] {
@@ -518,9 +525,10 @@
     backdrop-filter: blur(5px);
     background: rgba(0,0,0,0.4);
     display: flex;
-    align-items: center;
+     align-items: flex-end;
     justify-content: center;
     z-index: 9999;
+     padding-bottom: 50px;
 }
 
 .feedback-container {
@@ -625,6 +633,142 @@
     align-items: center;
     height: 40px;
 }
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  max-height: 220px; /* Set max height for scroll */
+  overflow-y: auto;   /* Enable vertical scrollbar */
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+   background-color: rgba(0, 0, 0, 0.1);
+ }
+
+ /* Street Selection Overlay Styles */
+ .street-selection-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   backdrop-filter: blur(8px);
+   -webkit-backdrop-filter: blur(8px);
+   background-color: rgba(0, 0, 0, 0.5);
+   z-index: 9999;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+
+   .street-selection-container {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+  }
+
+  .street-selection-container .custom-select {
+    margin: 0 auto;
+    display: block;
+  }
+
+ .street-selection-container h2 {
+   color: #333;
+   font-size: 28px;
+   margin-bottom: 10px;
+   font-weight: bold;
+ }
+
+ .street-selection-container p {
+   color: #666;
+   font-size: 16px;
+   margin-bottom: 30px;
+ }
+
+ .continue-btn {
+   background-color: #007bff;
+   color: white;
+   border: none;
+   padding: 12px 30px;
+   border-radius: 8px;
+   font-size: 16px;
+   font-weight: bold;
+   cursor: pointer;
+   margin-top: 20px;
+   transition: background-color 0.3s ease;
+ }
+
+ .continue-btn:hover:not(:disabled) {
+   background-color: #0056b3;
+ }
+
+ .continue-btn:disabled {
+   background-color: #ccc;
+   cursor: not-allowed;
+ }
+
+ /* Hide main content initially */
+ .main {
+   filter: blur(0px);
+   transition: filter 0.3s ease;
+ }
+
+ .main.blurred {
+   filter: blur(8px);
+ }
 
 </style>
 
@@ -646,6 +790,140 @@
 <button id="toggleSidebarClosed" class="toggle-btn-closed" style="display:none;">
     <i class="fa-solid fa-angle-right"></i>
 </button>
+
+
+<div id="streetSelectionOverlay" class="street-selection-overlay">
+  <div class="street-selection-container">
+    <h2>Welcome to Barangay Commonwealth</h2>
+    <p>Please select your street to continue:</p>
+    <div class="custom-select" style="width:300px;">
+      <select id="streetSelect">
+        <option value="0">Select your street...</option>
+        <option value="1">A. Bonifacio</option>
+        <option value="2">Abelardo</option>
+        <option value="3">Adarna ST</option>
+        <option value="4">Aguinaldo</option>
+        <option value="5">Apple St</option>
+        <option value="6">Bacer St</option>
+        <option value="7">Bach</option>
+        <option value="8">Batasan Rd</option>
+        <option value="9">Bato-Bato St</option>
+        <option value="10">Beethoven</option>
+        <option value="11">Bicoleyte</option>
+        <option value="12">Brahms</option>
+        <option value="13">Caridad</option>
+        <option value="14">Chopin</option>
+        <option value="15">Commonwealth Ave</option>
+        <option value="16">Cuenco St</option>
+        <option value="17">D. Carmencita</option>
+        <option value="18">Dear St</option>
+        <option value="19">Debussy</option>
+        <option value="20">Don Benedicto</option>
+        <option value="21">Don Desiderio Ave</option>
+        <option value="22">Don Espejo Ave</option>
+        <option value="23">Don Fabian</option>
+        <option value="24">Don Jose Ave</option>
+        <option value="25">Don Macario</option>
+        <option value="26">Dona Adaucto</option>
+        <option value="27">Dona Agnes</option>
+        <option value="28">Dona Ana Candelaria</option>
+        <option value="29">Dona Carmen Ave</option>
+        <option value="30">Dona Cynthia</option>
+        <option value="31">Dona Fabian Castillo</option>
+        <option value="32">Dona Juliana</option>
+        <option value="33">Dona Lucia</option>
+        <option value="34">Dona Maria</option>
+        <option value="35">Dona Severino</option>
+        <option value="36">Ecol St</option>
+        <option value="37">Elliptical Rd</option>
+        <option value="38">Elma St</option>
+        <option value="39">Ernestine</option>
+        <option value="40">Ernestito</option>
+        <option value="41">Eulogio St</option>
+        <option value="42">Freedom Park</option>
+        <option value="43">Gen. Evangelista</option>
+        <option value="44">Gen. Ricarte</option>
+        <option value="45">Geraldine St</option>
+        <option value="46">Gold St</option>
+        <option value="47">Grapes St</option>
+        <option value="48">Handel</option>
+        <option value="49">Hon. B. Soliven</option>
+        <option value="50">Jasmin St</option>
+        <option value="51">Johan St</option>
+        <option value="52">John Street</option>
+        <option value="53">Julius</option>
+        <option value="54">June June</option>
+        <option value="55">Kalapati St</option>
+        <option value="56">Kamagong St</option>
+        <option value="57">Kasoy St</option>
+        <option value="58">Kasunduan</option>
+        <option value="59">Katibayan St</option>
+        <option value="60">Katipunan St</option>
+        <option value="61">Katuparan</option>
+        <option value="62">Kaunlaran</option>
+        <option value="63">Kilyawan St</option>
+        <option value="64">La Mesa Drive</option>
+        <option value="65">Laurel St</option>
+        <option value="66">Lawin St</option>
+        <option value="67">Liszt</option>
+        <option value="68">Lunas St</option>
+        <option value="69">Ma Theresa</option>
+        <option value="70">Mango</option>
+        <option value="71">Manila Gravel Pit Rd</option>
+        <option value="72">Mark Street</option>
+        <option value="73">Markos Rd</option>
+        <option value="74">Martan St</option>
+        <option value="75">Martirez St</option>
+        <option value="76">Matthew St</option>
+        <option value="77">Melon</option>
+        <option value="78">Mozart</option>
+        <option value="79">Obanc St</option>
+        <option value="80">Ocampo Ave</option>
+        <option value="81">Odigal</option>
+        <option value="82">Pacamara St</option>
+        <option value="83">Pantaleona</option>
+        <option value="84">Paul St</option>
+        <option value="85">Payatas Rd</option>
+        <option value="86">Perez St</option>
+        <option value="87">Pilot Drive</option>
+        <option value="88">Pineapple St</option>
+        <option value="89">Pres. Osmena</option>
+        <option value="90">Pres. Quezon</option>
+        <option value="91">Pres. Roxas</option>
+        <option value="92">Pugo St</option>
+        <option value="93">Republic Ave</option>
+        <option value="94">Riverside Ext</option>
+        <option value="95">Riverside St</option>
+        <option value="96">Rose St</option>
+        <option value="97">Rossini</option>
+        <option value="98">Saint Anthony Street</option>
+        <option value="99">Saint Paul Street</option>
+        <option value="100">San Andres St</option>
+        <option value="101">San Diego St</option>
+        <option value="102">San Miguel St</option>
+        <option value="103">San Pascual</option>
+        <option value="104">San Pedro</option>
+        <option value="105">Sanchez St</option>
+        <option value="106">Santo Nino Street</option>
+        <option value="107">Santo Rosario Street</option>
+        <option value="108">Schubert</option>
+        <option value="109">Simon St</option>
+        <option value="110">Skinita Shortcut</option>
+        <option value="111">Steve St</option>
+        <option value="112">Sto. Nino</option>
+        <option value="113">Strauss</option>
+        <option value="114">Sumapi Drive</option>
+        <option value="115">Tabigo St</option>
+        <option value="116">Thomas St</option>
+        <option value="117">Verdi</option>
+        <option value="118">Villonco</option>
+        <option value="119">Wagner</option>
+      </select>
+    </div>
+         <button id="continueBtn" class="continue-btn">Continue</button>
+  </div>
+</div>
+
 
 <body><div class="main">
     <img src="images/baramgay.jpg" alt="Header Image" class="header-img" id="home">
@@ -694,8 +972,7 @@
         <input type="text" id="name" placeholder="Your name (optional)">
         <input type="file" id="picture" accept="image/*" required>
         <input type="file" id="video" accept="video/*" required>
-        <input type="text" id="address" placeholder="Enter address or location" required>
-        <button type="submit">Submit Tip</button>
+        <input type="text" id="address" readonly style="text-align: center; font-weight: bold; font-size: 1.1rem; color: #bbbbbb9c; border: none; background: none; box-shadow: none;">
         <button type="button" class="cancel-btn" id="cancelTipForm">Cancel</button>
       </form>
       <p id="tipMessage"></p>
@@ -745,6 +1022,7 @@
     </div>
     <div id="feedbackSection" class="feedback-blur-bg" style="display: none;">
         <div class="feedback-container">
+            <p id="feedbackStreet" style="font-size: 1.1rem; color: #555; font-weight: bold; margin-bottom: 2px; text-align: center;"></p>
             <h2 class="feedback-title">We value your opinion.</h2>
             <p class="feedback-text-small">How would you rate your overall experience?</p>
             <div class="rating-stars">
@@ -757,9 +1035,9 @@
             <p class="feedback-text-small">Kindly take a moment to tell us what you think.</p>
             <form id="feedbackForm" method="POST" action="#" enctype="multipart/form-data">
                 <input type="hidden" name="rating" id="ratingValue" value="0">
-
+                <input type="hidden" name="street" id="feedbackStreetHidden" value="">
                 <textarea name="message" rows="5" placeholder="" required></textarea>
-
+                <div id="feedbackMsg" style="text-align:center;color:#065f46;font-weight:600;margin-top:6px;"></div>
                 <div class="feedback-actions">
                     <button type="submit" class="submit-button">Share my feedback</button>
                     <button type="button" id="cancelFeedbackButton" class="cancel-button">Cancel</button>
@@ -780,9 +1058,9 @@
             }
         </style>      
 </div>
-<div class="speech-bubble-welcome" id="welcomeBubble">
-    Welcome, Citizen of CommonWealth!
-</div>
+   <div class="speech-bubble-welcome" id="welcomeBubble" style="display: none;">
+      Welcome, Citizen of Commonwealth!
+  </div>
 <a href="login" class="signup-btn">Login</a>
 <script>
     const sidebar = document.getElementById('sidebar');
@@ -931,24 +1209,39 @@ document.addEventListener('DOMContentLoaded', function () {
     tipMessage.textContent = "";
   });
 
-  tipForm.addEventListener("submit", (e) => {
+  tipForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const picture = document.getElementById("picture").files[0];
     const video = document.getElementById("video").files[0];
     const address = document.getElementById("address").value;
+    const name = (document.getElementById("name").value || '').trim();
 
     if (!picture || !video || address.trim() === "") {
       alert("Please fill in all required fields.");
       return;
     }
 
-    tipMessage.textContent = "Tip submitted successfully!";
-    tipForm.reset();
+    const fd = new FormData();
+    fd.append('action','submit_tip');
+    fd.append('name', name);
+    fd.append('address', address);
+    fd.append('picture', picture);
+    fd.append('video', video);
 
-    setTimeout(() => {
-      blurOverlay.style.display = "none";
-      tipMessage.textContent = "";
-    }, 2000);
+    tipMessage.textContent = "Submitting...";
+    try {
+      const res = await fetch('/capstone/views/api/notifications.php', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data && data.success) {
+        tipMessage.textContent = "Tip submitted successfully!";
+        tipForm.reset();
+        setTimeout(() => { blurOverlay.style.display = "none"; tipMessage.textContent = ""; }, 1500);
+      } else {
+        tipMessage.textContent = (data && data.message) ? data.message : 'Submission failed';
+      }
+    } catch (err) {
+      tipMessage.textContent = 'Network error';
+    }
   });
 </script>
 <script>
@@ -985,6 +1278,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const stars = document.querySelectorAll('.rating-stars .fa-star');
     const ratingInput = document.getElementById('ratingValue');
 
+    const feedbackMsg = document.getElementById('feedbackMsg');
+    const feedbackStreetHidden = document.getElementById('feedbackStreetHidden');
+
     // Show feedback form
     if (showBtn && feedbackSection) {
         showBtn.addEventListener('click', () => {
@@ -1014,14 +1310,222 @@ document.addEventListener("DOMContentLoaded", function () {
             ratingInput.value = index + 1;
         });
     });
+
+    // Handle feedback submit
+    const feedbackForm = document.getElementById('feedbackForm');
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const rating = parseInt(document.getElementById('ratingValue').value || '0', 10);
+            const messageEl = feedbackForm.querySelector('textarea[name="message"]');
+            const streetVal = (document.getElementById('feedbackStreetHidden')?.value || '').trim();
+            const msg = (messageEl?.value || '').trim();
+            if (!rating || !msg) {
+                alert('Please select a rating and enter your message.');
+                return;
+            }
+            const fd = new FormData();
+            fd.append('action', 'submit_feedback');
+            fd.append('rating', String(rating));
+            fd.append('message', msg);
+            fd.append('street', streetVal);
+            try {
+                const res = await fetch('/capstone/views/api/notifications.php', { method: 'POST', body: fd });
+                const data = await res.json();
+                if (data && data.success) {
+                    alert('Feedback success!');
+                    // Reset stars
+                    stars.forEach(s => s.classList.remove('active'));
+                    ratingInput.value = '0';
+                    if (messageEl) messageEl.value = '';
+                    // Close overlay
+                    const feedbackSection = document.getElementById('feedbackSection');
+                    if (feedbackSection) feedbackSection.style.display = 'none';
+                } else {
+                    alert(data && data.message ? data.message : 'Submission failed');
+                }
+            } catch (err) {
+                alert('Network error');
+            }
+        });
+    }
 });
 </script>
-<script>
-setTimeout(() => {
-    document.getElementById('welcomeBubble').style.display = 'none';
-}, 5000);
-</script>
+ <script>
+ // Street Selection Overlay Functionality
+ document.addEventListener('DOMContentLoaded', function() {
+     const streetSelect = document.getElementById('streetSelect');
+     const continueBtn = document.getElementById('continueBtn');
+     const streetSelectionOverlay = document.getElementById('streetSelectionOverlay');
+     const mainContent = document.querySelector('.main');
+     const welcomeBubble = document.getElementById('welcomeBubble');
 
+     // Add blur class to main content initially
+     mainContent.classList.add('blurred');
+
+           // Reset street selection on page reload
+      localStorage.removeItem('selectedStreet');
+      localStorage.removeItem('selectedStreetName');
+      
+      // Always show the street selection overlay on page load
+      streetSelectionOverlay.style.display = 'flex';
+      mainContent.classList.add('blurred');
+
+           // Enable/disable continue button based on selection
+      streetSelect.addEventListener('change', function() {
+          if (this.value !== '0') {
+              continueBtn.disabled = false;
+          } else {
+              continueBtn.disabled = true;
+          }
+      });
+
+             // Handle continue button click
+       continueBtn.addEventListener('click', function() {
+            const selectedValue = streetSelect.value;
+            const selectedText = streetSelect.options[streetSelect.selectedIndex].text;
+
+            if (selectedValue !== '0') {
+                // Store the selection in localStorage
+                localStorage.setItem('selectedStreet', selectedValue);
+                localStorage.setItem('selectedStreetName', selectedText);
+
+                // Hide overlay and show main content
+                streetSelectionOverlay.style.display = 'none';
+                mainContent.classList.remove('blurred');
+
+                // Show and update welcome bubble with selected street
+                if (welcomeBubble) {
+                    welcomeBubble.textContent = `Welcome, Citizen of ${selectedText} in Commonwealth!`;
+                    welcomeBubble.style.display = 'flex';
+
+                    // Auto-hide welcome bubble after 5 seconds
+                    setTimeout(() => {
+                        welcomeBubble.style.display = 'none';
+                    }, 5000);
+                }
+
+                // Auto-fill address/location in tip form
+                const addressInput = document.getElementById('address');
+        if (addressInput) {
+            addressInput.value = `-- ${selectedText} --`;
+        }
+
+        // Set street name in feedback form
+        const feedbackStreet = document.getElementById('feedbackStreet');
+        if (feedbackStreet) {
+            feedbackStreet.textContent = `-- from Citizen of ${selectedText} --`;
+        }
+        const feedbackStreetHidden = document.getElementById('feedbackStreetHidden');
+        if (feedbackStreetHidden) {
+            feedbackStreetHidden.value = selectedText;
+        }
+            } else {
+                // If no street is selected, show default message
+                if (welcomeBubble) {
+                    welcomeBubble.textContent = `Welcome, Citizen of Commonwealth!`;
+                    welcomeBubble.style.display = 'flex';
+
+                    // Auto-hide welcome bubble after 5 seconds
+                    setTimeout(() => {
+                        welcomeBubble.style.display = 'none';
+                    }, 5000);
+                }
+                // Clear street name in feedback form
+                const feedbackStreet = document.getElementById('feedbackStreet');
+                if (feedbackStreet) {
+                    feedbackStreet.textContent = '';
+                }
+                const feedbackStreetHidden = document.getElementById('feedbackStreetHidden');
+                if (feedbackStreetHidden) {
+                    feedbackStreetHidden.value = '';
+                }
+            }
+       });
+ });
+ </script>
+<script>
+    var x, i, j, l, ll, selElmnt, a, b, c;
+/* Look for any elements with the class "custom-select": */
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  ll = selElmnt.length;
+  /* For each element, create a new DIV that will act as the selected item: */
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /* For each element, create a new DIV that will contain the option list: */
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < ll; j++) {
+    /* For each option in the original select element,
+    create a new DIV that will act as an option item: */
+    c = document.createElement("DIV");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        /* When an item is clicked, update the original select box,
+        and the selected item: */
+        var y, i, k, s, h, sl, yl;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        sl = s.length;
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            yl = y.length;
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+    /* When the select box is clicked, close any other select boxes,
+    and open/close the current select box: */
+    e.stopPropagation();
+    closeAllSelect(this);
+    this.nextSibling.classList.toggle("select-hide");
+    this.classList.toggle("select-arrow-active");
+  });
+}
+
+function closeAllSelect(elmnt) {
+  /* A function that will close all select boxes in the document,
+  except the current select box: */
+  var x, y, i, xl, yl, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  xl = x.length;
+  yl = y.length;
+  for (i = 0; i < yl; i++) {
+    if (elmnt == y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove("select-arrow-active");
+    }
+  }
+  for (i = 0; i < xl; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+    }
+  }
+}
+
+/* If the user clicks anywhere outside the select box,
+then close all select boxes: */
+document.addEventListener("click", closeAllSelect);
+</script>
 
 </body>
 </html>

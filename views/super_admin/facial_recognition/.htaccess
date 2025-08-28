@@ -1,0 +1,10 @@
+# Allow access to PHP files
+<Files "*.php">
+    Require all granted
+</Files>
+
+# Set default index
+DirectoryIndex surveillance_panel.php
+
+# Enable PHP execution
+AddHandler application/x-httpd-php .php

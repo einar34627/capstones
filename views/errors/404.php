@@ -48,7 +48,7 @@
         <h1 class="error-code">404</h1>
         <p class="error-message">Page Not Found</p>
         <p>The page you're looking for doesn't exist.</p>
-        <a href="/" class="back-link">Go Back Home</a>
+        <a href="welcome" class="back-link">Go Back Home</a>
     </div>
 </body>
 </html> 

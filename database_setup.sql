@@ -10,14 +10,16 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) UNIQUE NOT NULL,
     email_verified_at TIMESTAMP NULL,
     password VARCHAR(255) NOT NULL,
-    usertype ENUM('user', 'admin') DEFAULT 'user',
+    usertype ENUM('user', 'admin', 'sec_admin', 'super_admin') DEFAULT 'user',
     remember_token VARCHAR(100) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Insert default admin user (password: admin123)
+-- Insert default admin users (password: admin123)
 INSERT INTO users (name, email, password, usertype) VALUES 
+('Super Admin', 'superadmin@caps.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'super_admin'),
+('Secretary Admin', 'secadmin@caps.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'sec_admin'),
 ('Admin User', 'admin@caps.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin')
 ON DUPLICATE KEY UPDATE password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
 

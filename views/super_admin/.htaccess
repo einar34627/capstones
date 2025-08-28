@@ -1,0 +1,26 @@
+# Protect Super Admin Directory
+# This file adds an extra layer of security
+
+# Deny access to sensitive files
+<Files "*.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Deny access to configuration files
+<Files "*.ini">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files "*.log">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes
+
+# Custom error pages
+ErrorDocument 403 /views/errors/403.php
+ErrorDocument 404 /views/errors/404.php

@@ -1,0 +1,20 @@
+# Feedback & Tip Management Routing
+RewriteEngine On
+
+# Redirect /feedback_tip_management/ to /feedback_tip_management/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^$ index.php [L]
+
+# Allow access to PHP files
+<Files "*.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes
+
+# Custom error pages
+ErrorDocument 403 /capstone/views/errors/403.php
+ErrorDocument 404 /capstone/views/errors/404.php

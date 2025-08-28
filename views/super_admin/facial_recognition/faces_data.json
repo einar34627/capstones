@@ -1,0 +1,37 @@
+[
+    {
+        "id": "68a8661b19d7d",
+        "name": "rheyner magnaye",
+        "image_path": "C:\\xampp\\htdocs\\capstone\\views\\admin\\face_management\/..\/..\/super_admin\/facial_recognition\/uploads\/faces\/68a8661b1905e_Rheyner Magnaye.jpg",
+        "image_path_web": "\/capstone\/views\/super_admin\/facial_recognition\/uploads\/faces\/68a8661b1905e_Rheyner Magnaye.jpg",
+        "created_at": "2025-08-22 14:44:11"
+    },
+    {
+        "id": "68a8714236ad6",
+        "name": "lee laguitan",
+        "image_path": "C:\\xampp\\htdocs\\capstone\\views\\admin\\face_management\/..\/..\/super_admin\/facial_recognition\/uploads\/faces\/68a8714235ce5_701adfd1-0507-4a09-8a85-e9b61a86c332.jpeg",
+        "image_path_web": "\/capstone\/views\/super_admin\/facial_recognition\/uploads\/faces\/68a8714235ce5_701adfd1-0507-4a09-8a85-e9b61a86c332.jpeg",
+        "created_at": "2025-08-22 15:31:46"
+    },
+    {
+        "id": "68a87562afb21",
+        "name": "rheyner magnaye",
+        "image_path": "C:\\xampp\\htdocs\\capstone\\views\\admin\\face_management\/..\/..\/super_admin\/facial_recognition\/uploads\/faces\/68a87562aeb57_Rheyner Magnaye.jpg",
+        "image_path_web": "\/capstone\/views\/super_admin\/facial_recognition\/uploads\/faces\/68a87562aeb57_Rheyner Magnaye.jpg",
+        "created_at": "2025-08-22 15:49:22"
+    },
+    {
+        "id": "68a87ade16fa2",
+        "name": "lee laguitan",
+        "image_path": "C:\\xampp\\htdocs\\capstone\\views\\admin\\face_management\/..\/..\/super_admin\/facial_recognition\/uploads\/faces\/68a87ade169e1_Lee Laguitan.jpeg",
+        "image_path_web": "\/capstone\/views\/super_admin\/facial_recognition\/uploads\/faces\/68a87ade169e1_Lee Laguitan.jpeg",
+        "created_at": "2025-08-22 16:12:46"
+    },
+    {
+        "id": "68a8856450fb2",
+        "name": "rheyner magnaye",
+        "image_path": "C:\\xampp\\htdocs\\capstone\\views\\admin\\face_management\/..\/..\/super_admin\/facial_recognition\/uploads\/faces\/68a885645087d_Rheyner Magnaye.jpg",
+        "image_path_web": "\/capstone\/views\/super_admin\/facial_recognition\/uploads\/faces\/68a885645087d_Rheyner Magnaye.jpg",
+        "created_at": "2025-08-22 16:57:40"
+    }
+]
